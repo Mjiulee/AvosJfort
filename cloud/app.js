@@ -17,7 +17,7 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-	AV.User.logIn(req.body.usename,req.body.password).then(function(){
+	AV.User.logIn(req.body.username,req.body.password).then(function(){
 			res.redirect('/profile');
 		},
 		function(error){
