@@ -12,5 +12,30 @@ app.get('/hello', function(req, res) {
   res.render('hello', {title:'avostest', message: 'Congrats, you just set up your app!' });
 });
 
+app.get('/login', function(req, res) {
+  res.render('login', {title:'登录'});
+});
+
+app.post('/login', function(req, res) {
+	AV.User.logIn(req.body.usename,req.body.password).then(function(){
+			res.redirect('/profile');
+		},
+		function(error){
+			res.redirect('login');
+		}
+	);
+});
+
+app.get('/profile', function(req, res) {
+    // 判断用户是否已经登录
+    if (AV.User.current()) {
+      // 如果已经登录，发送当前登录用户信息。
+      res.send(AV.User.current());
+    } else {
+      // 没有登录，跳转到登录页面。
+      res.redirect('/login');
+    }
+});
+
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
 app.listen();
