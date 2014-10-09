@@ -65,5 +65,13 @@ app.post('/signup', function(req, res) {
   });
 });
 
+app.get('/newpost',function(req,res){
+  res.render('newpost', {title:'注册'});
+});
+
+app.post('/newpost',function(req,res){
+  alert('尚未进行文件保存处理');
+});
+
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
 app.listen();
