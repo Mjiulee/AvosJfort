@@ -48,6 +48,22 @@ app.get('/signup', function(req, res) {
   res.render('signup', {title:'注册'});
 });
 
+app.post('/signup', function(req, res) {
+  var user = new AV.User();
+  user.set("username", req.body.username);
+  user.set("password", req.body.password);
+
+  user.signUp(null, {
+    success: function(user) {
+      // Hooray! Let them use the app now.
+      res.redirect('/profile');
+    },
+    error: function(user, error) {
+      // Show the error message somewhere and let the user try again.
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
+});
 
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
 app.listen();
