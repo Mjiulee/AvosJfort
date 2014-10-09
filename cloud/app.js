@@ -44,5 +44,10 @@ app.get('/profile', function(req, res) {
     }
 });
 
+app.get('/signup', function(req, res) {
+  res.render('signup', {title:'注册'});
+});
+
+
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
 app.listen();
