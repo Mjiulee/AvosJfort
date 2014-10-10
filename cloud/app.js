@@ -87,7 +87,7 @@ app.post('/newpost',function(req,res){
       var theFile = new AV.File(iconFile.name, {base64: base64Data});
       theFile.save().then(function(theFile){
         //res.send("上传成功！");
-        userPost.set('image',theFile.get('url'));
+        userPost.set('image',theFile.url());
         userPost.save(null, {
           success: function(gameScore) {
             res.send("发表成功！");
