@@ -86,13 +86,13 @@ app.post('/newpost',function(req,res){
       var base64Data = data.toString('base64');
       var theFile = new AV.File(iconFile.name, {base64: base64Data});
       theFile.save().then(function(theFile){
-        res.send("上传成功！");
+        //res.send("上传成功！");
       });
     });
   }
   userPost.save(null, {
     success: function(gameScore) {
-      res.redirect('success');
+      res.send("发表成功！");
     }
   });
 });
