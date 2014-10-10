@@ -117,7 +117,7 @@ app.get('/postlist',function(req,res){
     success: function(results) {
       // results is an array of AV.Object.
       var json_data = JSON.stringify(results); 
-      res.send(json_data);
+      res.send(req.body.pageNo + ' ' req.body.pagesize + json_data);
     },
     error: function(error) {
       // error is an instance of AV.Error.
