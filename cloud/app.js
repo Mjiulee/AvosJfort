@@ -70,7 +70,28 @@ app.get('/newpost',function(req,res){
 });
 
 app.post('/newpost',function(req,res){
-  alert('尚未进行文件保存处理');
+  var UserPost = AV.Object.extend("UserPost");// 创建AV.Object子类.
+  var userPost = new UserPost();// 创建该类的一个实例
+  // 保存数据
+  userPost.set('title',req.body.title);
+  userPost.set('content',req.body.content);
+  
+  var fileUploadControl = $("#image")[0];
+  if (fileUploadControl.files.length > 0) {
+    var file   = fileUploadControl.files[0];
+    var name   = "photo.png";
+    var avFile = new AV.File(name, file);
+    avFile.save().then(function(){
+      userPost.set('image',avFile);      // The file has been saved to AV.
+    }, function(error) {
+      // error
+    });
+  }
+  userPost.save(null, {
+    success: function(gameScore) {
+      res.redirect('success');
+    }
+  });
 });
 
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
