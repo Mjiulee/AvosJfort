@@ -104,5 +104,20 @@ app.post('/newpost',function(req,res){
   }
 });
 
+app.get('/postlist',function(req,res){
+  var UserPost = AV.Object.extend("UserPost");
+  var query = new AV.Query(UserPost);
+  query.find({
+    success: function(results) {
+      // results is an array of AV.Object.
+      res.send(results.toJSON());
+    },
+    error: function(error) {
+      // error is an instance of AV.Error.
+      res.send(error.toJSON());
+    }
+  });
+});
+
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
 app.listen();
