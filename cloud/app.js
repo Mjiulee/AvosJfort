@@ -106,7 +106,13 @@ app.post('/newpost',function(req,res){
 
 app.get('/postlist',function(req,res){
   var UserPost = AV.Object.extend("UserPost");
-  var query = new AV.Query(UserPost);
+  var query    = new AV.Query(UserPost);
+  var pagesize = req.body.pagesize;
+  var pageNo   = req.body.pageNo;
+  query.limit(pagesize);
+  query.skip(pagesize*pageNo);
+  query.descending('updatedAt');
+
   query.find({
     success: function(results) {
       // results is an array of AV.Object.
