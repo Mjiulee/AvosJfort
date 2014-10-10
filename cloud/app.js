@@ -88,14 +88,20 @@ app.post('/newpost',function(req,res){
       theFile.save().then(function(theFile){
         //res.send("上传成功！");
         userPost.set('image',theFile.get('url'));
+        userPost.save(null, {
+          success: function(gameScore) {
+            res.send("发表成功！");
+          }
+        });
       });
     });
+  }else{
+    userPost.save(null, {
+      success: function(gameScore) {
+        res.send("发表成功！");
+      }
+    });
   }
-  userPost.save(null, {
-    success: function(gameScore) {
-      res.send("发表成功！");
-    }
-  });
 });
 
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
