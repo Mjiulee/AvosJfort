@@ -110,11 +110,12 @@ app.get('/postlist',function(req,res){
   query.find({
     success: function(results) {
       // results is an array of AV.Object.
-      res.send(results.toJSON());
+      var json_data = JSON.stringify(results); 
+      res.send(json_data);
     },
     error: function(error) {
       // error is an instance of AV.Error.
-      res.send(error.toJSON());
+      res.send('查询出错');
     }
   });
 });
