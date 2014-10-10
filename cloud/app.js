@@ -76,15 +76,18 @@ app.post('/newpost',function(req,res){
   userPost.set('title',req.body.title);
   userPost.set('content',req.body.content);
   
-  var fileUploadControl = $("#image")[0];
-  if (fileUploadControl.files.length > 0) {
-    var file   = fileUploadControl.files[0];
-    var name   = "photo.png";
-    var avFile = new AV.File(name, file);
-    avFile.save().then(function(){
-      userPost.set('image',avFile);      // The file has been saved to AV.
-    }, function(error) {
-      // error
+  var fs = require('fs');
+  var iconFile = req.files.image;
+  if(iconFile){
+    fs.readFile(iconFile.path, function(err, data){
+      if(err){
+        return res.send("读取文件失败");
+      }
+      var base64Data = data.toString('base64');
+      var theFile = new AV.File(iconFile.name, {base64: base64Data});
+      theFile.save().then(function(theFile){
+        res.send("上传成功！");
+      });
     });
   }
   userPost.save(null, {
